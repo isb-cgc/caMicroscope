@@ -10,6 +10,15 @@ class CamicUtils
 		$this->api_key = $Session['api_key'];
 	}
 
+        function getMetadata($slideBarcode)
+        {
+                $metadataUrl = $this->CONFIG['getSlideBarcode'] . $slideBarcode . "/";
+                $getMetadataRequest = new RestRequest($metadataUrl, 'GET');
+                $getMetadataRequest->execute();
+                $metadataList = json_decode($getMetadataRequest->responseBody);
+                return $metadataList;
+        }
+
 	function getImageDimensions($tissueId)
 	{
 		$dimensionsUrl = $this->CONFIG['getDimensions'] .  $this->api_key . "&TCGAId=" . $tissueId;
@@ -27,10 +36,13 @@ class CamicUtils
 	function retrieveImageLocation($tissueId)
 	{
 		$fileUrl = $this->CONFIG['getFileLocation'] . $this->api_key . "&TCGAId=" . $tissueId;
-		$fielUrl = str_replace(" ","%20",$fileUrl);
+        
+		$fileUrl = str_replace(" ","%20",$fileUrl);
+        //echo $fileUrl;
 		$getFileLocationRequest = new RestRequest($fileUrl,'GET');
 		$getFileLocationRequest->execute();
 		$location = json_decode($getFileLocationRequest->responseBody);
+        //echo $location;
 		return $location;
 	}
 

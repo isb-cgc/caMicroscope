@@ -1,47 +1,46 @@
 <?php 
 
-///new
-$baseUrl = "http://127.0.0.1:9099";
-$serviceUrl = "$baseUrl/services/Camicroscope3-QA";
 
-$imageUrl = "$serviceUrl/ImageMetaData";
+$baseUrl = "http://quip-data:9099";
 
-$templateUrl = "$serviceUrl/AnnotationTemplate";
-$markupUrl = "$serviceUrl/Annotations";
+$serviceUrl = "$baseUrl/services/Camicroscope_DataLoader";
+$annotationsUrl = "$baseUrl/services/Camicroscope_Annotations";
+$imageUrl = "$serviceUrl/DataLoader";
 
 $dynamicServices = $serviceUrl;
-$firebase = "https://test-8f679.firebaseio.com/camicroscopeStates";
+$kueUrl = "http://quip-jobs:3000";
 
 
-$tempMarkupUrl = "http://localhost:9099/services/TCGABRCA_Dev";
+//Optional Firebase
+$firebase = "";
+$firebase_key = "";
 
 return array(
     'auth_realm' => "$baseUrl/securityTokenService",
-    /*
-     * temp
-     */
-    'algorithmsForImage' => "$serviceUrl/Provenance/query/getAlgorithmsForImage?",
-    'getMultipleAnnotations' => "$serviceUrl/Markups/query/getMultipleMarkups?",
-    //'getMultipleAnnotations' => "http://172.17.0.2:9099/services/Camicroscope_Annotations/MarkupLoader/query/getMultipleMarkups?",
+    /* Markups */
+    'algorithmsForImage' => "$annotationsUrl/MarkupsForImages/query/MarkupsAvilableForImage?",
+    'getMultipleAnnotations' => "$annotationsUrl/MarkupLoader/query/getMultipleMarkups?",
+    'deleteMarkups' => "$annotationsUrl/MarkupLoader/delete/deleteMultipleMarkups",
+    'postAnnotation' => "$annotationsUrl/MarkupLoader/submit/json",
+    'getROI' => "$annotationsUrl/MarkupLoader/query/getROI",
 
-
-    'firebase' => $firebase,
-    'firebase_key' => $firebase_key,
-    'retrieveTemplate' => "$serviceUrl/AnnotationTemplate/query/retrieveTemplate",
-    'getAllAnnotations' => "$tempMarkupUrl/Annotations/query/byUserAndImageID?iid=",
-    'getAnnotationsSpatial' => "$serviceUrl/GeoJSONImageMetaData/query/getMarkups?",
-    'getAnnotationSpatialFilter' => "$tempMarkupUrl/Annotations/query/allByFilter?iid=",
-    'postAnnotation' => "$serviceUrl/Markups/submit/json",
-    'retrieveAnnotation' => "$tempMarkupUrl/Annotations/query/byAnnotId?annotId=",
-    'postJobParameters' => "$tempMarkupUrl/AnalysisJobs/submit/singleJob",
-    'deleteAnnotation' => "$tempMarkupUrl/Annotations/delete/singleAnnotation?annotId=",
+    /* Image */
     'getDimensions' => "$imageUrl/query/getDimensionsByIID?api_key=",
     'getFileLocation' => "$imageUrl/query/getFileLocationByIID?api_key=",
     'getMPP' => "$imageUrl/query/getMPPByIID?api_key=",
-    'fastcgi_server' => "/fastcgi-bin/iipsrv.fcgi",
-    'postWorkOrder' => "$dynamicServices/WorkOrders/submit/json"
+    'fastcgi_server' => "/fcgi-bin/iipsrv.fcgi",
+    'getSlideBarcode' => "https://mvm-dot-isb-cgc.appspot.com/images/",
+    
+     /* Dynamic Services */
+    'postWorkOrder' => "$dynamicServices/WorkOrders/submit/json",
+    'kueUrl' => $kueUrl,
 
+     'firebase'=> $firebase,
+     'firebase_key'=> $firebase_key
 );
+
+
+
 
 
 ?>

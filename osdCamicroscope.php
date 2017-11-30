@@ -18,7 +18,8 @@
         <link rel="stylesheet" type="text/css" media="all" href="css/simplemodal.css" />
         <link rel="stylesheet" type="text/css" media="all" href="css/ui.fancytree.min.css" />
     
-        <script src="js/dependencies/jquery.js"></script>
+	<!--        <script src="js/dependencies/jquery.js"></script> -->
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
         <!--JSON Form dependencies-->
 
@@ -30,9 +31,9 @@
         <script type="text/javascript" src="js/dependencies/jsonform.js"></script>
         <script type="text/javascript" src="js/dependencies/jsv.js"></script>
         <!--End JSON Form dependencies -->
+	<script src="/featurescapeapps/js/findapi_config.js" type="text/javascript"></script>"
 
-
-        <script src="js/openseadragon/openseadragon-bin-2.0.0/openseadragon.js"></script>
+        <script src="js/openseadragon/openseadragon-bin-1.0.0/openseadragon.js"></script>
         <script src="js/openseadragon/openseadragon-imaginghelper.min.js"></script>
         <script src="js/openseadragon/openseadragon-scalebar.js"></script>
         <script src="js/openseadragon/openseadragonzoomlevels.js"></script>
@@ -40,6 +41,7 @@
         <script type="text/javascript" src="js/mootools/mootools-more-1.4.0.1-compressed.js"></script>
         <script src="js/annotationtools/annotools-openseajax-handler.js"></script>
         <script src="js/imagemetadatatools/osdImageMetadata.js"></script>
+        <script src="js/imagemetadatatools/osdImageMetadataFromSlideBarcode.js"></script>
         <script src="js/annotationtools/ToolBar.js"></script>
         <script src="js/annotationtools/AnnotationStore.js"></script>
         <script src="js/annotationtools/osdAnnotationTools.js"></script>
@@ -76,7 +78,6 @@
             }
 
         .navWindow
-
         {
             position: absolute;
                 z-index: 10001;
@@ -106,11 +107,17 @@
         <script type="text/javascript">
           $.noConflict();
           var annotool = null;
-          var tissueId = <?php echo json_encode($_GET['tissueId']); ?>;
+	  var tissueId = null;
+	  
+	  var imagedata = null;
 
+          if ((tissueId = <?php echo json_encode($_GET['tissueId']); ?>) != null) {
+	       imagedata = new OSDImageMetaData({imageId:tissueId});
+          }
+	  else if ((tissueId = <?php echo json_encode($_GET['slideBarcode']); ?>) != null){
+	       imagedata = new OSDImageMetaDataFromSlideBarcode({imageId:tissueId});
+	  }
 
-          var imagedata = new OSDImageMetaData({imageId:tissueId});
-         
           var MPP = imagedata.metaData[0];
 
 
@@ -199,7 +206,7 @@ function isAnnotationActive(){
         /*Pan and zoom to point*/
         var bound_x = <?php echo json_encode($_GET['x']); ?>;
         var bound_y = <?php echo json_encode($_GET['y']); ?>;
-        var zoom = <?php echo json_encode($_GET['zoom']); ?> || 6;
+        var zoom = <?php echo json_encode($_GET['zoom']); ?> || viewer.viewport.getMaxZoom();;
         /*
         var savedFilters = [
           {'name': 'Brightness', 'value': 100},
@@ -233,7 +240,7 @@ function isAnnotationActive(){
             var savedFilters = data.state.filters;
             var viewport = data.state.viewport;
             var pan = data.state.pan;
-            var zoom = data.state.zoom;
+            var zoom = data.state.zoom || viewer.viewport.getMaxZoom();
 
 
             //pan and zoom have preference over viewport
