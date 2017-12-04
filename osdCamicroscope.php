@@ -1,4 +1,4 @@
-    <?php 
+1;95;0c    <?php 
 	require '../authenticate.php';
 
     $config = require 'api/Configuration/config.php';
@@ -117,6 +117,10 @@
 	  else if ((tissueId = <?php echo json_encode($_GET['slideBarcode']); ?>) != null){
 	       imagedata = new OSDImageMetaDataFromSlideBarcode({imageId:tissueId});
 	  }
+	  else if ((tissueId = <?php echo json_encode($_GET['slideBarcodeIW']); ?>) != null){
+	       imagedata = new OSDImageMetaDataFromSlideBarcode({imageId:tissueId});
+	       arr = imagedata.metaData[1].split("/");
+	       imagedata.metaData[1] = "/data/images/imaging_west".concat("/",arr[10].concat('/',arr[11]));
 
           var MPP = imagedata.metaData[0];
 
