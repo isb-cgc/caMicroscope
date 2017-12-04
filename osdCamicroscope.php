@@ -120,13 +120,13 @@
 	  else if ((tissueId = <?php echo json_encode($_GET['slideBarcodeIW']); ?>) != null){
 	       imagedata = new OSDImageMetaDataFromSlideBarcode({imageId:tissueId});
 	       arr = imagedata.metaData[1].split("/");
-	       imagedata.metaData[1] = "/data/images/imaging_west".concat("/",arr[10].concat('/',arr[11]));
-
+	       imagedata.metaData[1] = "/data/images/imaging-west".concat("/",arr[10].concat('/',arr[11]));
+	  }
           var MPP = imagedata.metaData[0];
 
 
           var fileLocation = imagedata.metaData[1];
-         jQuery("#bookmarkURLDiv").hide();
+          jQuery("#bookmarkURLDiv").hide();
          
           var viewer = new OpenSeadragon.Viewer({ 
                 id: "viewer", 
