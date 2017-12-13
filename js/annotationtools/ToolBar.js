@@ -228,11 +228,11 @@ ToolBar.prototype.createButtons = function () {
      * Mootools to Jquery for creation of toolbar buttons
      */
     this.homebutton = jQuery('<img>', {
-			src: 'images/ic_home_white_24px.svg',
-			class: 'toolButton firstToolButtonSpace',
-			title: 'Home'
-		});
-		tool.append(this.homebutton);
+	src: 'images/ic_home_white_24px.svg',
+	class: 'toolButton firstToolButtonSpace',
+	title: 'Home'
+	});
+    //tool.append(this.homebutton);
     this.rectbutton = jQuery('<img>', {
       title: 'Draw Rectangle',
       id: 'drawRectangle',
@@ -266,14 +266,14 @@ ToolBar.prototype.createButtons = function () {
       'class': 'spacerButton',
       'src': 'images/spacer.svg'
     })
-    tool.append(this.spacer2)
+    //tool.append(this.spacer2)
 
     this.filterbutton = jQuery('<img>', {
       'title': 'Filter Markups',
       'class': 'toolButton',
       'src': 'images/filter.svg'
     })
-    tool.append(this.filterbutton) // Filter Button
+    //tool.append(this.filterbutton) // Filter Button
 
 
 
@@ -294,7 +294,7 @@ ToolBar.prototype.createButtons = function () {
       'class': 'spacerButton',
       'src': 'images/spacer.svg'
     })
-    tool.append(this.spacer1)
+    //tool.append(this.spacer1)
 
     this.analyticsbutton = jQuery('<img>', {
       'title': 'Image Analysis',
@@ -302,7 +302,7 @@ ToolBar.prototype.createButtons = function () {
       'src': 'images/analyze.png'
 
     })
-    tool.append(this.analyticsbutton)
+    //tool.append(this.analyticsbutton)
 
     this.filterImgButton = jQuery('<img>', {
       'title': 'View Results',
