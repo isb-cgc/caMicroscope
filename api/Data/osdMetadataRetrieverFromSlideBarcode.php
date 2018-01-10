@@ -10,10 +10,8 @@ $metadata = $utils->getMetadata($tissueId);
 $mppx = (float)$metadata->{'MPP-X'};
 $mppy = (float)$metadata->{'MPP-Y'};
 $dzi = $metadata->{'FileLocation'};
-$dzi = str_replace('gs:/', '/data/images', $dzi);
-$dzi .= '.dzi';
 
-$returnArray = array(array('mpp-x'=> $mppx, 'mpp-y'=>$mppy), $dzi);
+$returnArray = array(array('mpp-x'=> $mppx, 'mpp-y'=>$mppy), $dzi, $metadata->{ 'Height' }, $metadata->{ 'Width' });
 echo json_encode($returnArray);
 
 ?>

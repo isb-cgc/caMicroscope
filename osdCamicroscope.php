@@ -93,8 +93,10 @@
         <div id="container">
                     
             <div id="tool"></div>
+<!--
             <div id="panel"></div>
             <div id="bookmarkURLDiv"></div>
+-->
         <div id="algosel"><div id="tree"></div></div>
 
             <div class="demoarea">
@@ -108,7 +110,7 @@
           $.noConflict();
           var annotool = null;
 	  var tissueId = null;
-	  
+ 
 	  var imagedata = null;
 
           if ((tissueId = <?php echo json_encode($_GET['tissueId']); ?>) != null) {
@@ -116,31 +118,75 @@
           }
 	  else if ((tissueId = <?php echo json_encode($_GET['slideBarcode']); ?>) != null){
 	       imagedata = new OSDImageMetaDataFromSlideBarcode({imageId:tissueId});
+//	       console.log("MPP",imagedata.metaData[0]);
+//	       console.log("URL",imagedata.metaData[1]);
+//	       console.log("[2]",imagedata.metaData[2]);
+//	       console.log("[3]",imagedata.metaData[3]);
 	  }
-	  else if ((tissueId = <?php echo json_encode($_GET['slideBarcodeIW']); ?>) != null){
-	       imagedata = new OSDImageMetaDataFromSlideBarcode({imageId:tissueId});
-	       arr = imagedata.metaData[1].split("/");
-	       imagedata.metaData[1] = "/data/images/imaging-west".concat("/",arr[10].concat('/',arr[11]));
-	  }
-          var MPP = imagedata.metaData[0];
+//	  else if ((tissueId = <?php echo json_encode($_GET['slideBarcodeIW']); ?>) != null){
+//	       imagedata = new OSDImageMetaDataFromSlideBarcode({imageId:tissueId});
+//	       arr = imagedata.metaData[1].split("/");
+//	       imagedata.metaData[1] = "/data/images/imaging-west".concat("/",arr[10].concat('/',arr[11]));
+//	  }
 
+          var MPP = imagedata.metaData[0];
+//          var MPP = 0.2498;
 
           var fileLocation = imagedata.metaData[1];
+
           jQuery("#bookmarkURLDiv").hide();
          
-          var viewer = new OpenSeadragon.Viewer({ 
-                id: "viewer", 
-                prefixUrl: "images/",
-                showNavigator:  true,
-                navigatorPosition:   "BOTTOM_RIGHT",
-                //navigatorId: "navigator",
-                zoomPerClick: 2,
-                animationTime: 0.75,
-                maxZoomPixelRatio: 2,
-                visibilityRatio: 1,
-                constrainDuringPan: true,
-                //zoomPerScroll: 1
-          });
+	  if (fileLocation.slice(-7) == "svs.dzi") {
+	      // It's an svs file
+//	      console.log("svs file");
+	      var viewer = new OpenSeadragon.Viewer({ 
+		    id: "viewer", 
+		    prefixUrl: "images/",
+		    showNavigator:  true,
+		    navigatorPosition:   "BOTTOM_RIGHT",
+		    //navigatorId: "navigator",
+		    zoomPerClick: 2,
+		    animationTime: 0.75,
+		    maxZoomPixelRatio: 2,
+		    visibilityRatio: 1,
+		    constrainDuringPan: true,
+		    //zoomPerScroll: 1
+              });
+
+	  }
+	  else {
+	      // It's a deepzoom hierarchy
+//	      console.log("dzi file");
+	      Height = parseInt(imagedata.metaData[2]);
+	      Width = parseInt(imagedata.metaData[3]);
+	      var viewer = new OpenSeadragon.Viewer({ 
+		    id: "viewer", 
+		    prefixUrl: "images/",
+		    showNavigator:  true,
+		    tileSources:   {
+		    height: Height,
+		    width: Width,
+//    	            height: 34560,
+//    	            width:  43264,
+    //		    tileSize: {{ slide_tilesize }},
+		    tileSize: 512,
+		    minLevel: 4,
+		    getTileUrl: function( level, x, y ){
+			return fileLocation   + (level) + "/" + x + "_" + y + ".jpeg";
+//    	                return "http://storage.googleapis.com/dzi-images/TCGA-BQ-5886-01Z-00-DX1_files" +
+//			    "/" + (level) + "/" + x + "_" + y + ".jpeg";
+			}
+		    },
+		    navigatorPosition:   "BOTTOM_RIGHT",
+		    //navigatorId: "navigator",
+		    zoomPerClick: 2,
+		    animationTime: 0.75,
+		    maxZoomPixelRatio: 2,
+		    visibilityRatio: 1,
+		    constrainDuringPan: true,
+		    //zoomPerScroll: 1
+	      });
+          }
             //console.log(viewer.navigator);
     //      var zoomLevels = viewer.zoomLevels({
     //        levels:[0.001, 0.01, 0.2, 0.1,  1]
@@ -148,7 +194,10 @@
             
             viewer.addHandler("open", addOverlays);
             viewer.clearControls();
-            viewer.open("<?php print_r($config['fastcgi_server']); ?>?DeepZoom=" + fileLocation);
+ 	    if (fileLocation.slice(-7) == "svs.dzi") {
+// 	       console.log("svs file");
+               viewer.open("<?php print_r($config['fastcgi_server']); ?>?DeepZoom=" + fileLocation);
+	    }
             var imagingHelper = new OpenSeadragonImaging.ImagingHelper({viewer: viewer});
             imagingHelper.setMaxZoom(1);
             //console.log(this.MPP);

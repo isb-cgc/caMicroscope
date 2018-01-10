@@ -10,7 +10,6 @@ $imageUrl = "$serviceUrl/DataLoader";
 $dynamicServices = $serviceUrl;
 $kueUrl = "http://quip-jobs:3000";
 
-
 //Optional Firebase
 $firebase = "";
 $firebase_key = "";
@@ -30,6 +29,7 @@ return array(
     'getMPP' => "$imageUrl/query/getMPPByIID?api_key=",
     'fastcgi_server' => "/fcgi-bin/iipsrv.fcgi",
     'getSlideBarcode' => "https://mvm-dot-isb-cgc.appspot.com/images/",
+    'dziBucket' => "http://storage.googleapis.com/dzi-images",
     
      /* Dynamic Services */
     'postWorkOrder' => "$dynamicServices/WorkOrders/submit/json",

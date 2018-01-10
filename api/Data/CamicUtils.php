@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL);	
 class CamicUtils
 {
 	public $CONFIG;
@@ -13,9 +14,44 @@ class CamicUtils
         function getMetadata($slideBarcode)
         {
                 $metadataUrl = $this->CONFIG['getSlideBarcode'] . $slideBarcode . "/";
+
+//		error_log("\$metadataUrl: " . $metadataUrl );
+
                 $getMetadataRequest = new RestRequest($metadataUrl, 'GET');
                 $getMetadataRequest->execute();
                 $metadataList = json_decode($getMetadataRequest->responseBody);
+
+		// See if there is deepzoomified version
+		$svsLocation = $metadataList->{'FileLocation'};
+
+//		error_log("\$svsLocation: " . $svsLocation );
+
+		// ***Fix hardcoded imaging-west***
+		$dziFile = str_replace("gs://imaging-west" , "" , $svsLocation);
+		$dziFile = str_replace(".svs", ".dzi", $dziFile);
+		$dziUrl = $this->CONFIG['dziBucket'] . $dziFile;
+
+//		error_log("\$dziUrl: " . $dziUrl);
+
+                $getDziRequest = new RestRequest($dziUrl, 'GET');
+                $getDziRequest->execute();
+
+//		error_log("responseBody: " . $getDziRequest->responseBody);
+
+		if (strpos($getDziRequest->responseBody,'http://schemas.microsoft.com/deepzoom/2008')) {
+//		   error_log("It's a dzi.");
+		   $metadataList->{'FileLocation'} = str_replace(".dzi", "_files/", $dziUrl);
+		} else {
+//		   error_log("It's an svs.");
+		   $svsUrl = $metadataList->{'FileLocation'};
+		   // *** Fix hardcoded /data/images***
+		   $svsUrl = str_replace('gs:/', '/data/images', $svsUrl);
+		   $svsUrl .= '.dzi';
+		   $metadataList->{'FileLocation'} = $svsUrl;
+		}
+
+//		error_log("FileLocation: " . $metadataList->{'FileLocation'});
+		      
                 return $metadataList;
         }
 
