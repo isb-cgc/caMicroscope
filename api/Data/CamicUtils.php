@@ -21,13 +21,13 @@ class CamicUtils
                 $getMetadataRequest->execute();
                 $metadataList = json_decode($getMetadataRequest->responseBody);
 
-		// See if there is deepzoomified version
+		// See if there is deepzoomified version. We do this by trying to 
+		// get the corresponding .dzi file.
 		$svsLocation = $metadataList->{'FileLocation'};
 
 //		error_log("\$svsLocation: " . $svsLocation );
 
-		// ***Fix hardcoded imaging-west***
-		$dziFile = str_replace("gs://imaging-west" , "" , $svsLocation);
+		$dziFile = str_replace($this->CONFIG['svsBucket'] , "" , $svsLocation);
 		$dziFile = str_replace(".svs", ".dzi", $dziFile);
 		$dziUrl = $this->CONFIG['dziBucket'] . $dziFile;
 
@@ -44,7 +44,6 @@ class CamicUtils
 		} else {
 //		   error_log("It's an svs.");
 		   $svsUrl = $metadataList->{'FileLocation'};
-		   // *** Fix hardcoded /data/images***
 		   $svsUrl = str_replace('gs:/', '/data/images', $svsUrl);
 		   $svsUrl .= '.dzi';
 		   $metadataList->{'FileLocation'} = $svsUrl;

@@ -29,7 +29,8 @@ return array(
     'getMPP' => "$imageUrl/query/getMPPByIID?api_key=",
     'fastcgi_server' => "/fcgi-bin/iipsrv.fcgi",
     'getSlideBarcode' => "https://mvm-dot-isb-cgc.appspot.com/images/",
-    'dziBucket' => "http://storage.googleapis.com/dzi-images",
+    'dziBucket' => "http://storage.googleapis.com/imaging-west-dzi",
+    'svsBucket' => "gs://imaging-west",
     
      /* Dynamic Services */
     'postWorkOrder' => "$dynamicServices/WorkOrders/submit/json",

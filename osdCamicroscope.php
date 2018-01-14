@@ -138,7 +138,7 @@
          
 	  if (fileLocation.slice(-7) == "svs.dzi") {
 	      // It's an svs file
-//	      console.log("svs file");
+	      console.log("svs file");
 	      var viewer = new OpenSeadragon.Viewer({ 
 		    id: "viewer", 
 		    prefixUrl: "images/",
@@ -156,7 +156,7 @@
 	  }
 	  else {
 	      // It's a deepzoom hierarchy
-//	      console.log("dzi file");
+	      console.log("dzi file");
 	      Height = parseInt(imagedata.metaData[2]);
 	      Width = parseInt(imagedata.metaData[3]);
 	      var viewer = new OpenSeadragon.Viewer({ 
