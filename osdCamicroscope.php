@@ -118,19 +118,9 @@
           }
 	  else if ((tissueId = <?php echo json_encode($_GET['slideBarcode']); ?>) != null){
 	       imagedata = new OSDImageMetaDataFromSlideBarcode({imageId:tissueId});
-//	       console.log("MPP",imagedata.metaData[0]);
-//	       console.log("URL",imagedata.metaData[1]);
-//	       console.log("[2]",imagedata.metaData[2]);
-//	       console.log("[3]",imagedata.metaData[3]);
 	  }
-//	  else if ((tissueId = <?php echo json_encode($_GET['slideBarcodeIW']); ?>) != null){
-//	       imagedata = new OSDImageMetaDataFromSlideBarcode({imageId:tissueId});
-//	       arr = imagedata.metaData[1].split("/");
-//	       imagedata.metaData[1] = "/data/images/imaging-west".concat("/",arr[10].concat('/',arr[11]));
-//	  }
 
           var MPP = imagedata.metaData[0];
-//          var MPP = 0.2498;
 
           var fileLocation = imagedata.metaData[1];
 
@@ -166,15 +156,11 @@
 		    tileSources:   {
 		    height: Height,
 		    width: Width,
-//    	            height: 34560,
-//    	            width:  43264,
-    //		    tileSize: {{ slide_tilesize }},
-		    tileSize: 512,
+//		    tileSize: 512,
+		    tileSize: 256,
 		    minLevel: 4,
 		    getTileUrl: function( level, x, y ){
 			return fileLocation   + (level) + "/" + x + "_" + y + ".jpeg";
-//    	                return "http://storage.googleapis.com/dzi-images/TCGA-BQ-5886-01Z-00-DX1_files" +
-//			    "/" + (level) + "/" + x + "_" + y + ".jpeg";
 			}
 		    },
 		    navigatorPosition:   "BOTTOM_RIGHT",
