@@ -493,7 +493,8 @@ ToolBar.prototype.createButtons = function () {
   this.caMicLogoButton = jQuery('<img>', {
     'class': 'caMicLogoButton',
     'title': 'caMicLogo',
-    'src': 'https://storage.googleapis.com/webapp-prod-static-files/static/img/camic_logo.png'
+//    'src': 'https://storage.googleapis.com/webapp-prod-static-files/static/img/camic_logo.png'
+    'src': 'images/camic_logo.png'
   })
   tool.append(this.caMicLogoButton)
 
