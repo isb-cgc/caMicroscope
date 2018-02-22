@@ -149,6 +149,8 @@
 	      console.log("dzi file");
 	      Height = parseInt(imagedata.metaData[2]);
 	      Width = parseInt(imagedata.metaData[3]);
+	      console.log("Height",Height);
+	      console.log("Width",Width);
 	      var viewer = new OpenSeadragon.Viewer({ 
 		    id: "viewer", 
 		    prefixUrl: "images/",
