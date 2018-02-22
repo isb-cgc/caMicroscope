@@ -490,12 +490,28 @@ ToolBar.prototype.createButtons = function () {
   tool.append(this.ajaxBusy)
   this.ajaxBusy.hide()
 
-  this.titleButton = jQuery('<p>', {
+  this.caMicLogoButton = jQuery('<img>', {
+    'class': 'caMicLogoButton',
+    'title': 'caMicLogo',
+    'src': 'https://storage.googleapis.com/webapp-prod-static-files/static/img/camic_logo.png'
+  })
+  tool.append(this.caMicLogoButton)
+
+
+  this.titleButton = jQuery('<a>', {
+    'href': 'http://caMicroscope.org', 
+    'target': '_BLANK',
+    css: {
+           "color": "white"
+    } 
+  }) 
+  this.titleButton.append( jQuery('<p>', {  
     'class': 'titleButton',
     'id': 'titleButton',
     'text': 'caMicroscope'
-  })
+  }))
   tool.append(this.titleButton)
+
 
   this.iidbutton = jQuery('<p>', {
     'class': 'iidButton',
