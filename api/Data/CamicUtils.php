@@ -21,6 +21,8 @@ class CamicUtils
                 $getMetadataRequest->execute();
                 $metadataList = json_decode($getMetadataRequest->responseBody);
 
+//		error_log("\$metadataList->{case-info}: " . $metadataList->{'case-info'} );
+
 		// See if there is deepzoomified version. We do this by trying to 
 		// get the corresponding .dzi file.
 		$svsLocation = $metadataList->{'FileLocation'};

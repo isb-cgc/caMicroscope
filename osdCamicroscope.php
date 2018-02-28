@@ -106,6 +106,15 @@
 
         </div>
 
+	<div id="case-info">
+	    <p><b>Case Barcode: </b><span class="sample-barcode"></span></p>  
+	    <p><b>Sample Barcode: </b><span class="case-barcode"></span></p>
+	    <p><b>Image Type: </b><span class="img-type"></span></p> 
+	    <p><b>Disease Code: </b><span class="disease-code"></span></p> 
+	    <p><b>Project: </b><span class="project"></span></p> 
+	</div>
+
+
         <script type="text/javascript">
           $.noConflict();
           var annotool = null;
@@ -129,6 +138,8 @@
 	  if (fileLocation.slice(-7) == "svs.dzi") {
 	      // It's an svs file
 	      console.log("svs file");
+	      Height = parseInt(imagedata.metaData[2]);
+	      Width = parseInt(imagedata.metaData[3]);
 	      var viewer = new OpenSeadragon.Viewer({ 
 		    id: "viewer", 
 		    prefixUrl: "images/",
@@ -149,8 +160,6 @@
 	      console.log("dzi file");
 	      Height = parseInt(imagedata.metaData[2]);
 	      Width = parseInt(imagedata.metaData[3]);
-	      console.log("Height",Height);
-	      console.log("Width",Width);
 	      var viewer = new OpenSeadragon.Viewer({ 
 		    id: "viewer", 
 		    prefixUrl: "images/",
@@ -175,6 +184,38 @@
 		    //zoomPerScroll: 1
 	      });
           }
+	  console.log("Height",Height);
+	  console.log("Width",Width);
+
+	  case_info = imagedata.metaData[4];
+	  for (var key in case_info) {
+	      console.log(key,": ",case_info[key]);
+	  }
+
+	  for(var key in case_info) {
+	      if(case_info.hasOwnProperty(key)) {
+	          jQuery('#case-info span.'+key).text(case_info[key]);
+	      }
+	  }
+//	  jQuery('#case-info').attr("title", "Case information for "+case_id);
+	  jQuery('#case-info').attr("title", "Case information for "+tissueId);
+
+	  //Make the jQ dialog
+	  jQuery('#case-info').dialog({
+		  autoOpen: false,
+		  position: { my: "right bottom", at: "left top", of: jQuery('.case-info') },
+		  show: true
+	  });
+
+	  //And now bind the events
+	  jQuery('.case-info').on('mouseenter mouseover', function(){
+	       jQuery('#case-info').dialog("open");
+	  });
+
+	  jQuery('.case-info').on('mouseleave mouseout', function(){
+	       jQuery('#case-info').dialog("close");
+	  });
+
             //console.log(viewer.navigator);
     //      var zoomLevels = viewer.zoomLevels({
     //        levels:[0.001, 0.01, 0.2, 0.1,  1]
@@ -271,6 +312,7 @@ function isAnnotationActive(){
             }
         }*/
 
+	/*
         var stateID = <?php echo json_encode($_GET['stateID']); ?>;
 
         //Check if loading from saved state
@@ -321,6 +363,7 @@ function isAnnotationActive(){
         
         });
         }
+	*/
 
         if(bound_x && bound_y){
             var ipt = new OpenSeadragon.Point(+bound_x, +bound_y);
