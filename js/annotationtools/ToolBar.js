@@ -523,9 +523,13 @@ ToolBar.prototype.createButtons = function () {
   //Make the jQ dialog
   jQuery('#case-info').dialog({
 	  autoOpen: false,
-	  position: { my: "right bottom", at: "left top", of: this.iidbutton },
-	  show: true
+	  position: { my: "right-5 top+5", at: "left bottom", of: this.iidbutton },
+	  show: true,
+          minWidth: 340
   });
+//  jQuery('#case-info button.ui-dialog-titlebar-close').css('display', 'none');
+  jQuery('button.ui-dialog-titlebar-close').css('display', 'none');
+
 
   //And now bind the events
   this.iidbutton.on('mouseenter mouseover', function(){
