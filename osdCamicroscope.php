@@ -1,4 +1,4 @@
-    <?php 
+<?php 
 	require '../authenticate.php';
 
     $config = require 'api/Configuration/config.php';
@@ -15,6 +15,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" media="all" href="css/annotools.css" />
         <!--<link rel="stylesheet" type="text/css" media="all" href="css/jquery-ui.min.css" />-->
+	<link rel="stylesheet" type="text/css" media="all" href="css/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/jquery-ui.structure.min.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/jquery-ui.theme.min.css" />
         <link rel="stylesheet" type="text/css" media="all" href="css/simplemodal.css" />
         <link rel="stylesheet" type="text/css" media="all" href="css/ui.fancytree.min.css" />
     
@@ -31,7 +34,7 @@
         <script type="text/javascript" src="js/dependencies/jsonform.js"></script>
         <script type="text/javascript" src="js/dependencies/jsv.js"></script>
         <!--End JSON Form dependencies -->
-	<script src="/featurescapeapps/js/findapi_config.js" type="text/javascript"></script>"
+	<!--<script src="/featurescapeapps/js/findapi_config.js" type="text/javascript"></script>"-->
 
         <script src="js/openseadragon/openseadragon-bin-1.0.0/openseadragon.js"></script>
         <script src="js/openseadragon/openseadragon-imaginghelper.min.js"></script>
@@ -47,7 +50,7 @@
         <script src="js/annotationtools/osdAnnotationTools.js"></script>
         <script src="js/annotationtools/geoJSONHandler.js"></script>
         <script src="js/dependencies/MD5.js"></script>
-        <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script> 
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" type="text/javascript"></script> 
     
 
         <!--Filtering Tools-->
@@ -107,8 +110,8 @@
         </div>
 
 	<div id="case-info">
-	    <p><b>Case Barcode: </b><span class="sample-barcode"></span></p>  
-	    <p><b>Sample Barcode: </b><span class="case-barcode"></span></p>
+	    <p><b>Tissue Barcode: </b><span class="sample-barcode"></span></p>  
+	    <p><b>Case Barcode: </b><span class="case-barcode"></span></p>
 	    <p><b>Image Type: </b><span class="img-type"></span></p> 
 	    <p><b>Disease Code: </b><span class="disease-code"></span></p> 
 	    <p><b>Project: </b><span class="project"></span></p> 
@@ -193,28 +196,11 @@
 	  }
 
 	  for(var key in case_info) {
-	      if(case_info.hasOwnProperty(key)) {
+//	      if(case_info.hasOwnProperty(key)) {
 	          jQuery('#case-info span.'+key).text(case_info[key]);
-	      }
+//	      }
 	  }
-//	  jQuery('#case-info').attr("title", "Case information for "+case_id);
-	  jQuery('#case-info').attr("title", "Case information for "+tissueId);
-
-	  //Make the jQ dialog
-	  jQuery('#case-info').dialog({
-		  autoOpen: false,
-		  position: { my: "right bottom", at: "left top", of: jQuery('.case-info') },
-		  show: true
-	  });
-
-	  //And now bind the events
-	  jQuery('.case-info').on('mouseenter mouseover', function(){
-	       jQuery('#case-info').dialog("open");
-	  });
-
-	  jQuery('.case-info').on('mouseleave mouseout', function(){
-	       jQuery('#case-info').dialog("close");
-	  });
+	  jQuery('#case-info').attr("title", "Metadata for "+tissueId);
 
             //console.log(viewer.navigator);
     //      var zoomLevels = viewer.zoomLevels({
@@ -246,7 +232,7 @@
                 filters: {
                     processors: OpenSeadragon.Filters.BRIGHTNESS(0)
                 }
-});
+	    });
 
     //console.log(viewer);
 function isAnnotationActive(){

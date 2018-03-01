@@ -516,9 +516,25 @@ ToolBar.prototype.createButtons = function () {
 
   this.iidbutton = jQuery('<p>', {
     'class': 'iidButton case-info',
-    'text': 'case_id: ' + this.iid
+    'text': 'Slide Barcode: ' + this.iid
   })
   tool.append(this.iidbutton)
+
+  //Make the jQ dialog
+  jQuery('#case-info').dialog({
+	  autoOpen: false,
+	  position: { my: "right bottom", at: "left top", of: this.iidbutton },
+	  show: true
+  });
+
+  //And now bind the events
+  this.iidbutton.on('mouseenter mouseover', function(){
+       jQuery('#case-info').dialog("open");
+  });
+
+  this.iidbutton.on('mouseleave mouseout', function(){
+       jQuery('#case-info').dialog("close");
+  });
 
   /* ASHISH - disable quit button
       this.quitbutton = new Element('img', {
