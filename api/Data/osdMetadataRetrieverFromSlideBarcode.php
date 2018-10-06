@@ -12,12 +12,14 @@ $mppy = (float)$metadata->{'MPP-Y'};
 $dzi = $metadata->{'FileLocation'};
 
 if (array_key_exists('sample-barcode', $metadata)) {
+    $slide_barcode = $metadata->{'slide-barcode'};
     $sample_barcode = $metadata->{'sample-barcode'};
     $case_barcode = $metadata->{'case-barcode'};
     $img_type = $metadata->{'img-type'};
     $disease_code = $metadata->{'disease-code'};
     $project = $metadata->{'project'};
 } else {
+    $slide_barcode = 'Not yet available';
     $sample_barcode = 'Not yet available';
     $case_barcode = 'Not available';
     $img_type = 'Not available';
@@ -31,6 +33,7 @@ $returnArray = array(
     $metadata->{ 'Height' }, 
     $metadata->{ 'Width' },
     array(
+	'slide-barcode'=>$slide_barcode,
 	'sample-barcode'=>$sample_barcode,
     	'case-barcode'=>$case_barcode,
     	'img-type'=>$img_type,

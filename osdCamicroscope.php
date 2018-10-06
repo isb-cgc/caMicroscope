@@ -195,12 +195,14 @@
 	      console.log(key,": ",case_info[key]);
 	  }
 
+	  slideBarcode = case_info["slide-barcode"]
+
 	  for(var key in case_info) {
 //	      if(case_info.hasOwnProperty(key)) {
 	          jQuery('#case-info span.'+key).text(case_info[key]);
 //	      }
 	  }
-	  jQuery('#case-info').attr("title", "Metadata for "+tissueId);
+	  jQuery('#case-info').attr("title", "Metadata for "+slideBarcode);
 
             //console.log(viewer.navigator);
     //      var zoomLevels = viewer.zoomLevels({
@@ -262,7 +264,7 @@ function isAnnotationActive(){
                 top:'0px',
                 height: '48px',
                 width: '100%',
-                iid: tissueId,
+                iid: tissueId+'/'+slideBarcode,
                 annotool: annotool,
                 FilterTools: filteringtools
         });
