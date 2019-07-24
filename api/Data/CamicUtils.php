@@ -15,44 +15,45 @@ class CamicUtils
         {
                 $metadataUrl = $this->CONFIG['getSlideBarcode'] . $slideBarcode . "/";
 
-//		error_log("\$metadataUrl: " . $metadataUrl );
+		error_log("\$metadataUrl: " . $metadataUrl );
 
                 $getMetadataRequest = new RestRequest($metadataUrl, 'GET');
                 $getMetadataRequest->execute();
                 $metadataList = json_decode($getMetadataRequest->responseBody);
 
-//		error_log("\$metadataList->{case-info}: " . $metadataList->{'case-info'} );
+		error_log("\$metadataList->{case-info}: " . $metadataList->{'case-info'} );
 
 		// See if there is deepzoomified version. We do this by trying to 
 		// get the corresponding .dzi file.
 		$svsLocation = $metadataList->{'FileLocation'};
 
-//		error_log("\$svsLocation: " . $svsLocation );
+		error_log("\$svsLocation: " . $svsLocation );
 
-		$dziFile = str_replace($this->CONFIG['svsBucket'] , "" , $svsLocation);
-		$dziFile = str_replace(".svs", ".dzi", $dziFile);
+		$tcgaFileName = str_replace($this->CONFIG['svsBucket'] , "" , $svsLocation);
+		$dziFile = str_replace(".svs", ".dzi", $tcgaFileName);
 		$dziUrl = $this->CONFIG['dziBucket'] . $dziFile;
 
-//		error_log("\$dziUrl: " . $dziUrl);
+		error_log("\$dziUrl: " . $dziUrl);
 
                 $getDziRequest = new RestRequest($dziUrl, 'GET');
                 $getDziRequest->execute();
 
-//		error_log("responseBody: " . $getDziRequest->responseBody);
+		error_log("responseBody: " . $getDziRequest->responseBody);
 
 		if (strpos($getDziRequest->responseBody,'http://schemas.microsoft.com/deepzoom/2008')) {
-//		   error_log("It's a dzi.");
+		   error_log("It's a dzi.");
 		   $metadataList->{'FileLocation'} = str_replace(".dzi", "_files/", $dziUrl);
 		} else {
-//		   error_log("It's an svs.");
+		   error_log("It's an svs.");
 		   $svsUrl = $metadataList->{'FileLocation'};
+		   $svsUrl = str_replace($this->CONFIG['svsBucket'], $this->CONFIG['gdcBucket'], $svsUrl);
 		   $svsUrl = str_replace('gs:/', '/data/images', $svsUrl);
 		   $svsUrl .= '.dzi';
 		   $metadataList->{'FileLocation'} = $svsUrl;
 		}
 
-//		error_log("FileLocation: " . $metadataList->{'FileLocation'});
-		      
+		error_log("FileLocation: " . $metadataList->{'FileLocation'});
+
                 return $metadataList;
         }
 

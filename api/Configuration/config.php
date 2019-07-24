@@ -30,8 +30,9 @@ return array(
     'fastcgi_server' => "/fcgi-bin/iipsrv.fcgi",
     'getSlideBarcode' => "https://mvm-dot-isb-cgc.appspot.com/images/",
     'dziBucket' => "https://storage.googleapis.com/imaging-west-dzis",
-    'svsBucket' => "gs://imaging-west",
-    
+    'svsBucket' => "gs://isb-tcga-phs000178-open/gdc",
+    'gdcBucket' => "gs://gdc-tcga-phs000178-open",
+
      /* Dynamic Services */
     'postWorkOrder' => "$dynamicServices/WorkOrders/submit/json",
     'kueUrl' => $kueUrl,
