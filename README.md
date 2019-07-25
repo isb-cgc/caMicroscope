@@ -1,4 +1,6 @@
 
+## >>> NOTE: isb-cgc uses the isb-cgc-webapp branch.
+
 caMicroscope - A Web Based Annotation and Visualization Platform for Digitized Whole Slide Images
 
 Ameen Kazerouni <ameen.kazerouni@emory.edu>
