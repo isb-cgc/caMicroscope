@@ -46,7 +46,6 @@ class CamicUtils
 		} else {
 //		   error_log("It's an svs.");
 		   $svsUrl = $metadataList->{'FileLocation'};
-		   $svsUrl = str_replace($this->CONFIG['svsBucket'], $this->CONFIG['gdcBucket'], $svsUrl);
 		   $svsUrl = str_replace('gs:/', '/data/images', $svsUrl);
 		   $svsUrl .= '.dzi';
 		   $metadataList->{'FileLocation'} = $svsUrl;
